@@ -206,8 +206,8 @@ class IRCNetwork(Network):
     if data.find ( self.welcome_line ) != -1:
       self.userstable = dict()
       self.registered_users.clear()
-      if not self.use_sasl:
-        self.login()
+      # if not self.use_sasl:
+      #   self.login()
       for chan in self.channels:
         self.join(chan)
         #ScanWho(None,[chan])
@@ -523,7 +523,7 @@ class IRCNetwork(Network):
     if self.use_sasl:
       self._irc_sendmsg('CAP REQ :sasl')
     else:
-      self._irc_sendmsg ( 'PASS *********')
+      self._irc_sendmsg ( 'PASS %s' % password)#( 'PASS *********')
     self._irc_sendmsg ( 'NICK %s' % login)
     self._irc_sendmsg ( 'USER %s %s %s :%s' % (login, login, login, login))
     return True
